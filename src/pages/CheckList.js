@@ -203,7 +203,7 @@ export default function CheckList() {
     const [iList, setIList] = useState('')
     const [match, setMatch] = useState('smart')
     // result for rendering
-    const [result, setResult] = useState({ missing: [], options: [], matchError: false, matchHelp: '自定义匹配规则', text: '', graphs: { progress: {}, chart: {} } })
+    const [result, setResult] = useState({ missing: [], options: [], matchError: false, matchHelp: '自定义匹配规则', text: '', graphs: { progress: null, chart: null } })
 
     // load data from localStorage
     useEffect(() => {
