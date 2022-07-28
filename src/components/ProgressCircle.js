@@ -19,5 +19,5 @@ export default function ProgressCircle(props) {
                 {`${Math.round(props.value)}%`}
             </Typography>
         </Box>
-    </Box>)
-}
+    </Box>);
+};

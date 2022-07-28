@@ -1,5 +1,5 @@
 function setLS(items, appPrefix = 'MTOOLKIT') {
-    items.forEach(i => localStorage.setItem(appPrefix + '_' + i[0], i[1]))
+    items.forEach(i => localStorage.setItem(appPrefix + '_' + i[0], i[1]));
 }
 
 function getLS(items, appPrefix = 'MTOOLKIT') {
@@ -8,20 +8,20 @@ function getLS(items, appPrefix = 'MTOOLKIT') {
         let value = localStorage.getItem(appPrefix + '_' + i[0]);
         switch (value) {
             case null:
-                value = i[1]
+                value = i[1];
                 break
             case 'true':
-                value = true
+                value = true;
                 break
             case 'false':
-                value = false
+                value = false;
                 break
             default:
                 break
         }
-        data[index] = [i[0], value, i[2]]
+        data[index] = [i[0], value, i[2]];
     })
-    return data
+    return data;
 }
 
-export { setLS, getLS }
+export { setLS, getLS };
