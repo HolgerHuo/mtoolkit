@@ -18,7 +18,7 @@ function gotYou(data) {
     // variables in this function
     let matchRule
     let optionsText = '', missingText = ''
-    let iListArray = [], fListArray = []
+    let iListArray = [], fListArray = [], opts = []
 
     // variables to be returned as result
     let options = []
@@ -27,16 +27,23 @@ function gotYou(data) {
     let text = ''
     let progress = null, chart = null
 
-    // generate match rule
-    const regex = new RegExp('([^%]*)(%name|%result)([^%]*)(%name|%result)?(.*)', 'gi')
-    regex.lastIndex = 0
-    matchRule = regex.exec(data.match)
+    if (data.match.match(/(%)(?!result|name).*/gi) === null) {
+        // generate match rule
+        const regex = new RegExp('([^%]*)(%name|%result)([^%]*)(%name|%result)?(.*)', 'gi')
+        regex.lastIndex = 0
+        matchRule = regex.exec(data.match)
+    } else {
+        matchRule = null
+        matchError = true
+        matchHelp = (<>请删除除匹配词以外以%开头的内容！<br />匹配词: %name:姓名 %result:结果 smart: 智能模式<br />(至少包含 %name)<br />错误匹配将使用默认规则(智能模式)！</>)
+    }
+
 
     if (matchRule !== null && matchRule[2] === '%result' && matchRule[4] === undefined) {
         matchRule = null
     }
 
-    if (matchRule === null && data.match.trim() !== 'smart') {
+    if (matchRule === null && data.match.trim() !== 'smart' && matchError === false) {
         matchError = true
         matchHelp = (<>无法解析匹配规则！<br />匹配词: %name:姓名 %result:结果 smart: 智能模式<br />(至少包含 %name)<br />错误匹配将使用默认规则(智能模式)！</>)
     }
@@ -116,7 +123,6 @@ function gotYou(data) {
         }
 
         item = matchRule[2] === '%name' ? item.split(middle) : item.split(middle).reverse();
-
         return item.map(i => i.trim())
     }
 
@@ -128,19 +134,22 @@ function gotYou(data) {
     }
 
     // aggregate options with students
-    iListArray.map(i => i[1]).filter((value, index, self) => { // find all unique options
+    opts = iListArray.map(i => i[1]).filter((value, index, self) => { // find all unique options
         return self.indexOf(value) === index
-    }).forEach((o, index) => { // tba: remove options when all options cannot be matched
-        if (!(o === null && (matchRule !== null && (matchRule[2] === '%name' || matchRule[4] === undefined)))) {
-            const option = o === null ? '无法匹配' : o
-            options[index] = { [option]: [] }
-            iListArray.forEach(stu => {
-                if (stu[1] === o) {
-                    options[index][option].push(stu[0])
-                }
-            })
-        }
     })
+    if (!(opts.length === 1 && opts[0] === null)) {
+        opts.forEach((o, index) => { // tba: remove options when all options cannot be matched
+            if (!(o === null && (matchRule !== null && (matchRule[2] === '%name' || matchRule[4] === undefined)))) {
+                const option = o === null ? '无法匹配' : o
+                options[index] = { [option]: [] }
+                iListArray.forEach(stu => {
+                    if (stu[1] === o) {
+                        options[index][option].push(stu[0])
+                    }
+                })
+            }
+        })
+    }
 
     // find who didn't engage in check-in
     if (fListArray.length > 0) {
@@ -194,7 +203,7 @@ export default function CheckList() {
     const [iList, setIList] = useState('')
     const [match, setMatch] = useState('smart')
     // result for rendering
-    const [result, setResult] = useState({ missing: [], options: [], matchError: false, matchHelp: '自定义匹配规则', text: '', graphs: {progress: {}, chart: {}}})
+    const [result, setResult] = useState({ missing: [], options: [], matchError: false, matchHelp: '自定义匹配规则', text: '', graphs: { progress: {}, chart: {} } })
 
     // load data from localStorage
     useEffect(() => {
