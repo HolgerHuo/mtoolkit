@@ -310,7 +310,7 @@ export default function CheckList() {
                         setMatch(value);
                         localStorage.setItem(appPrefix + '_' + name, value);
                     }}
-                    placeholder="%name"
+                    placeholder="smart"
                     helperText={result.matchHelp}
                     error={result.matchError}
                 />
