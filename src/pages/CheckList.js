@@ -138,7 +138,7 @@ function gotYou(data) {
         return self.indexOf(value) === index
     })
     if (!(opts.length === 1 && opts[0] === null)) {
-        opts.forEach((o, index) => { // tba: remove options when all options cannot be matched
+        opts.forEach((o, index) => { 
             if (!(o === null && (matchRule !== null && (matchRule[2] === '%name' || matchRule[4] === undefined)))) {
                 const option = o === null ? '无法匹配' : o
                 options[index] = { [option]: [] }
@@ -245,7 +245,7 @@ export default function CheckList() {
                     localStorage.setItem(appPrefix + '_' + name, value);
                     setFList(value);
                 }}
-                InputProps={result.progress}
+                InputProps={result.graphs.progress}
                 variant="filled"
                 placeholder="张小聋，麻花疼"
                 helperText={<>请在此处粘贴完整名单<br />一个一行或使用逗号分隔</>}
@@ -342,7 +342,7 @@ export default function CheckList() {
             {result.missing !== false && result.options.length > 0 && <Divider variant="middle" />}
             {result.options.length > 0 && <Grid item xs={12} className='options-data' key={1}><OptionsBlock /></Grid>}
         </Grid>,
-        <Grid item xs={12} sm={6} className='options-chart result right' key={1}>{result.chart}</Grid>
+        <Grid item xs={12} sm={6} className='options-chart result right' key={1}>{result.graphs.chart}</Grid>
     ]
 
 
