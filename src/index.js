@@ -9,11 +9,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import "@fontsource/permanent-marker";
 
-import Routes from './routes/index'
+import MToolkitRoutes from './routes/index';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <Routes />
+    <MToolkitRoutes />
   </BrowserRouter>
 );
