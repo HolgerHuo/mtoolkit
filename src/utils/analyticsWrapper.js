@@ -42,13 +42,34 @@ async function initialize(provider) {
     }
 }
 
-function trackWebVitals() {
+async function trackWebVitals() {
     import('web-vitals').then(webVitals => {
-        webVitals.getCLS(console.debug);
-        webVitals.getFID(console.debug);
-        webVitals.getLCP(console.debug);
-        webVitals.getTTFB(console.debug);
-        webVitals.getFCP(console.debug);
+        if (ga.enabled === true) {
+            if (!ga.isInitialized) {
+                ga.isInitialized = await initialize('ga4');
+            }
+            if (ga.isInitialized) {
+                function sendToGoogleAnalytics({ name, delta, value, id }) {
+                    ga.tracker.event(name, {
+                        value: delta,
+                        metric_id: id,
+                        metric_value: value,
+                        metric_delta: delta,
+                    });
+                }
+                webVitals.getCLS(sendToGoogleAnalytics);
+                webVitals.getFID(sendToGoogleAnalytics);
+                webVitals.getLCP(sendToGoogleAnalytics);
+                webVitals.getTTFB(sendToGoogleAnalytics);
+                webVitals.getFCP(sendToGoogleAnalytics);
+            }
+        } else {
+            webVitals.getCLS(console.debug);
+            webVitals.getFID(console.debug);
+            webVitals.getLCP(console.debug);
+            webVitals.getTTFB(console.debug);
+            webVitals.getFCP(console.debug);
+        }
     }
     );
 }
@@ -83,7 +104,8 @@ export function trackPV() {
     if (umami.enabled !== true && ga.enabled !== true) {
         console.log('Navigated to ' + window.location.pathname);
     }
-    trackWebVitals();
+    let webVitals = trackWebVitals();
+    webVitals.catch(e => console.debug('ga4 failed sending web-vitals data: ', e))
 }
 
 async function umamiTrackEvent(value, type) {
