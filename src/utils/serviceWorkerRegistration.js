@@ -12,10 +12,10 @@
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
+  // [::1] is the IPv6 localhost address.
+  window.location.hostname === '[::1]' ||
+  // 127.0.0.0/8 are considered localhost for IPv4.
+  window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
 );
 
 export function register(config) {
@@ -29,7 +29,7 @@ export function register(config) {
       return;
     }
 
-    window.addEventListener('load', () => {
+    const callRegisterValidSW = () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
@@ -40,15 +40,21 @@ export function register(config) {
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://cra.link/PWA'
+            'This web app is being served cache-first by a service worker.'
           );
         });
       } else {
         // Is not localhost. Just register service worker
         registerValidSW(swUrl, config);
       }
-    });
+    };
+
+    if (document.readyState === "complete") {
+      callRegisterValidSW();
+    } else {
+      window.addEventListener('load', callRegisterValidSW);
+    }
+
   }
 }
 
@@ -68,8 +74,7 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               console.log(
-                'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://cra.link/PWA.'
+                'New content is available! Click the pop-up notification to update MToolkit!'
               );
 
               // Execute callback
@@ -80,7 +85,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              console.log('Content is cached for offline use.');
+              console.log('Content has been cached for offline use.');
 
               // Execute callback
               if (config && config.onSuccess) {

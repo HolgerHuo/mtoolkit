@@ -1,0 +1,33 @@
+.missing-student, .option-name {
+    font-weight: bold;
+}
+
+.result {
+    padding-top: 30px !important;
+}
+
+.missing-students {
+    padding-bottom: 15px !important;
+}
+
+.options-chart {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+canvas {
+    display: inline !important;
+    max-width: 80% !important;
+}
+
+.copy-button {
+    margin-right: 15px !important;
+}
+
+.fList input {
+    padding-right: 40px !important;
+}
+
+.iList input {
+    padding-right: 25px !important;
+}
