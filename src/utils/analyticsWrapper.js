@@ -16,7 +16,7 @@ async function initialize(provider) {
             // eslint-disable-next-line
             let regex = new RegExp('^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)', 'img');
             regex.lastIndex = 0;
-            let hostname = regex.exec(process.env.REACT_APP_PUBLIC_URL)[1];
+            let hostname = regex.exec(process.env.PUBLIC_URL)[1];
             hostname = hostname || 'invalid.domain';
             umami.tracker = new UmamiClass.react_umami(
                 process.env.REACT_APP_UMAMI_WEBSITE_ID,
