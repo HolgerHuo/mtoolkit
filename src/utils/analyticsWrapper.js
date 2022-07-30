@@ -17,12 +17,11 @@ async function initialize(provider) {
             let regex = new RegExp('^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)', 'img');
             regex.lastIndex = 0;
             let hostname = regex.exec(process.env.REACT_APP_PUBLIC_URL)[1];
-            hostname = hostname ? hostname : 'invalid.domain';
+            hostname = hostname || 'invalid.domain';
             umami.tracker = new UmamiClass.react_umami(
                 process.env.REACT_APP_UMAMI_WEBSITE_ID,
                 hostname,
                 process.env.REACT_APP_UMAMI_SCRIPT_URL
-
             );
             return true;
         } catch (e) {
@@ -30,9 +29,7 @@ async function initialize(provider) {
             return false;
         }
     }
-
     if (provider === 'ga4') {
-
         let ga4 = await import("react-ga4");
         try {
             ga.tracker = ga4.default;
@@ -42,7 +39,6 @@ async function initialize(provider) {
             console.error('ga4 initialization failed: ', e);
             return false;
         }
-
     }
 }
 
@@ -103,7 +99,9 @@ async function gaTrackEvent(value, type) {
     if (!ga.isInitialized) {
         ga.isInitialized = await initialize('ga4');
     }
-    ga.tracker.event({ category: type, action: value });
+    if (ga.isInitialized) {
+        ga.tracker.event({ category: type, action: value });
+    }
 }
 
 export function trackEvent(value, type = 'custom') {
