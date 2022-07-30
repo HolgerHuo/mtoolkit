@@ -43,35 +43,36 @@ async function initialize(provider) {
 }
 
 async function trackWebVitals() {
-    import('web-vitals').then(webVitals => {
-        if (ga.enabled === true) {
-            if (!ga.isInitialized) {
-                ga.isInitialized = await initialize('ga4');
-            }
-            if (ga.isInitialized) {
-                function sendToGoogleAnalytics({ name, delta, value, id }) {
-                    ga.tracker.event(name, {
-                        value: delta,
-                        metric_id: id,
-                        metric_value: value,
-                        metric_delta: delta,
-                    });
-                }
-                webVitals.getCLS(sendToGoogleAnalytics);
-                webVitals.getFID(sendToGoogleAnalytics);
-                webVitals.getLCP(sendToGoogleAnalytics);
-                webVitals.getTTFB(sendToGoogleAnalytics);
-                webVitals.getFCP(sendToGoogleAnalytics);
-            }
-        } else {
-            webVitals.getCLS(console.debug);
-            webVitals.getFID(console.debug);
-            webVitals.getLCP(console.debug);
-            webVitals.getTTFB(console.debug);
-            webVitals.getFCP(console.debug);
-        }
+    let webVitals = await import('web-vitals');
+    const collectWebVitals = endpoint => {
+        webVitals.getCLS(endpoint);
+        webVitals.getFID(endpoint);
+        webVitals.getLCP(endpoint);
+        webVitals.getFCP(endpoint);
+        webVitals.getTTFB(endpoint);
     }
-    );
+    if (ga.enabled === true) {
+        if (!ga.isInitialized) {
+            ga.isInitialized = await initialize('ga4');
+        }
+        if (ga.isInitialized) {
+            function sendToGoogleAnalytics({ name, delta, value, id }) {
+                ga.tracker.event(name, {
+                    value: delta,
+                    metric_id: id,
+                    metric_value: value,
+                    metric_delta: delta,
+                });
+            }
+            try {
+                collectWebVitals(sendToGoogleAnalytics);
+            } catch(e) {
+                console.debug('ga4 failed sending web-vitals data: ', e);
+            } 
+        }
+    } else {
+        collectWebVitals(console.debug);
+    }
 }
 
 async function umamiTrackPV() {
@@ -104,8 +105,7 @@ export function trackPV() {
     if (umami.enabled !== true && ga.enabled !== true) {
         console.log('Navigated to ' + window.location.pathname);
     }
-    let webVitals = trackWebVitals();
-    webVitals.catch(e => console.debug('ga4 failed sending web-vitals data: ', e))
+    trackWebVitals();
 }
 
 async function umamiTrackEvent(value, type) {
