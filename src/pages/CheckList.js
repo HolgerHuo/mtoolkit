@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { Grid, TextField, FormControlLabel, Checkbox, InputAdornment, IconButton, Button, Divider, Stack } from '@mui/material';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
@@ -206,7 +206,7 @@ export default function CheckList() {
     const [result, setResult] = useState({ missing: [], options: [], matchError: false, matchHelp: '自定义匹配规则', text: '', graphs: { progress: null, chart: null } })
 
     // load data from localStorage
-    useEffect(() => {
+    useMemo(() => {
 
         const initialData = [['fList', fList, setFList], ['iList', iList, setIList], ['match', match, setMatch], ['advancedOptions', advancedOptions, setAdvancedOptions]]
 
@@ -221,7 +221,7 @@ export default function CheckList() {
     }, [])
 
     // sideeffect on data change (delayed 300ms)
-    useEffect(() => {
+    useMemo(() => {
         const delayedCalc = setTimeout(() => {
             setResult(gotYou({ fList: fList, iList: iList, match: match }))
         }, 300)
