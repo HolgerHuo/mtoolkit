@@ -207,6 +207,7 @@ export default function CheckList() {
 
     // load data from localStorage
     useEffect(() => {
+
         const initialData = [['fList', fList, setFList], ['iList', iList, setIList], ['match', match, setMatch], ['advancedOptions', advancedOptions, setAdvancedOptions]]
 
         const savedData = getLS(initialData, appPrefix)
