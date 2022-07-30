@@ -47,7 +47,7 @@ function Sidebar(props) {
             <List>
                 {navItems.map((i) => (
                     <ListItem key={i.itemName} disablePadding>
-                        <ListItemButton sx={{ textAlign: 'center' }} component={Link} to={i.itemTo} >
+                        <ListItemButton sx={{ textAlign: 'center' }} component={Link} to={i.itemTo} onClick={props.onClick} >
                             <ListItemText primary={i.itemName} />
                         </ListItemButton>
                     </ListItem>
@@ -90,6 +90,12 @@ export default function NavFrame(props) {
         setDrawerOpen(!drawerOpen);
     };
 
+    const handleListClick = () => {
+        if (window.innerWidth < 600) {
+            handleDrawerToggle()
+        }
+    }
+
     const drawerWidth = 240;
 
     const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -121,7 +127,7 @@ export default function NavFrame(props) {
     return (
         <>
             <Navbar open={drawerOpen} handleDrawerToggle={handleDrawerToggle} />
-            <Sidebar open={drawerOpen} handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth} />
+            <Sidebar open={drawerOpen} handleDrawerToggle={handleDrawerToggle} drawerWidth={drawerWidth} onClick={handleListClick} />
             <Main open={drawerOpen}>
                 <Container maxWidth='sm'>
                     <Toolbar />
