@@ -1,0 +1,21 @@
+.sidebar-items {
+    padding-top: 56px;
+}
+
+.subtitle {
+    visibility: hidden;
+    overflow-x: hidden;
+    word-break: keep-all;
+}
+
+@media (min-width: 600px) {
+    .sidebar-items {
+        padding-top: 60px;
+    }
+}
+
+@media (min-width: 450px) {
+    .subtitle {
+        visibility: visible;
+    }
+}
