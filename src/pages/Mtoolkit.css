@@ -2,3 +2,13 @@
     /* text-align: center; */
     display: flex;
 }
+
+.app {
+    padding-top: 80px;
+}
+
+@media (min-width: 600px) {
+    .app {
+        padding-top: 96px;
+    }
+}

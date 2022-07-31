@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { Outlet } from "react-router-dom";
-import { CssBaseline, useMediaQuery } from '@mui/material';
+import { Container, CssBaseline, useMediaQuery } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import NavFrame from '../layouts/Navbar'
-import ServiceWorkerNotification from '../components/ServiceWorkerNotification'
+import Navbar from '../layouts/Navbar';
+import ServiceWorkerNotification from '../components/ServiceWorkerNotification';
 
 import './Mtoolkit.css';
 
@@ -23,15 +23,16 @@ function Mtoolkit() {
   );
 
   return (
-    <app className="Mtoolkit">
+    <Container className="Mtoolkit">
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ServiceWorkerNotification />
-        <NavFrame>
+        <Navbar />
+        <Container className="app" maxWidth='sm'>
           <Outlet />
-        </NavFrame>
+        </Container>
       </ThemeProvider>
-    </app>
+    </Container>
   );
 }
 
