@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Grid, TextField, FormControlLabel, Checkbox, InputAdornment, IconButton, Divider, Stack } from '@mui/material';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
-import DoughnutChart from '../components/DoughnutChart';
+import DoughnutChartLazy from '../components/DoughnutChartLazy';
 import ProgressCircle from '../components/ProgressCircle';
 import CopyButton from '../components/CopyButton';
 import autoFocus from '../utils/autoFocus';
@@ -167,7 +167,8 @@ function gotYou(data) {
     // generate text result and graphs
     if (options.length > 0) {
         optionsText = options.map(opt => Object.keys(opt)[0] + ': ' + opt[Object.keys(opt)[0]].join('、')).join('\n');
-        chart = <DoughnutChart data={{ labels: options.map(o => Object.keys(o)[0]), data: options.map(o => o[Object.keys(o)[0]].length) }} />;
+        const chartData = { labels: options.map(o => Object.keys(o)[0]), data: options.map(o => o[Object.keys(o)[0]].length) };
+        chart = <DoughnutChartLazy fallback={<></>} data={chartData} />;
     }
     if (missing !== false) {
         missingText = missing.length > 0 ? missing.join('、') + ' 没有接龙' : '全部接龙';
