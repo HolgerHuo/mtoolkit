@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Grid, TextField, FormControlLabel, Checkbox, InputAdornment, IconButton, Button, Divider, Stack } from '@mui/material';
+import { Grid, TextField, FormControlLabel, Checkbox, InputAdornment, IconButton, Divider, Stack } from '@mui/material';
 import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 
 import DoughnutChart from '../components/DoughnutChart';
 import ProgressCircle from '../components/ProgressCircle';
+import CopyButton from '../components/CopyButton';
 import autoFocus from '../utils/autoFocus';
 import { getLS } from '../utils/localStorageWrapper';
 import { trackEvent } from '../utils/analyticsWrapper';
@@ -169,7 +170,7 @@ function gotYou(data) {
         chart = <DoughnutChart data={{ labels: options.map(o => Object.keys(o)[0]), data: options.map(o => o[Object.keys(o)[0]].length) }} />;
     }
     if (missing !== false) {
-        missingText = options.length > 0 ? missing.join('、') + ' 没有接龙' : '全部接龙';
+        missingText = missing.length > 0 ? missing.join('、') + ' 没有接龙' : '全部接龙';
         progress = {
             endAdornment: (
                 <InputAdornment position="end" sx={{ position: 'absolute', top: 30, right: 15 }}>
@@ -288,7 +289,7 @@ export default function CheckList() {
 
     const AdvancedControls = [
         <Grid item xs={12} className='control-button' key={0}>
-            <Button variant="contained" disabled={!result.text} className='copy-button' onClick={() => navigator.clipboard.writeText(result.text)}>复制结果</Button>
+            <CopyButton content={result.text} disabled={!result.text} text='复制结果' />
             <FormControlLabel
                 control={
                     <Checkbox
