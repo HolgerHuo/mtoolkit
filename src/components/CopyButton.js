@@ -12,6 +12,8 @@ export default function CopyButton(props) {
             setNotification(0);
             console.debug('failed to write to clipboard with content: ', props.content);
             console.debug('error: ', e);
+        } finally {
+            props.callback && props.callback();
         }
     };
 

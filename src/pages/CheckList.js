@@ -289,7 +289,7 @@ export default function CheckList() {
 
     const AdvancedControls = [
         <Grid item xs={12} className='control-button' key={0}>
-            <CopyButton content={result.text} disabled={!result.text} text='复制结果' />
+            <CopyButton content={result.text} disabled={!result.text} text='复制结果' callback={() => trackEvent('check-list', 'copy')} />
             <FormControlLabel
                 control={
                     <Checkbox
