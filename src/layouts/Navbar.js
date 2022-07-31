@@ -37,7 +37,7 @@ export default function NavFrame() {
                     <Typography variant="h6" component={NavLink} sx={{ fontFamily: 'Permanent Marker', textAlign: 'left', textDecoration: 'none', color: 'unset', fontWeight: 600, marginRight: '15px', ml: 2 }} to='/' onClick={() => setDrawerOpen(false)}>
                         MToolkit
                     </Typography>
-                    <Typography variant="subtitle1" sx={{ textAlign: 'left', mt: 0.5, flexGrow: 1}} className='subtitle'>
+                    <Typography variant="subtitle1" sx={{ textAlign: 'left', mt: 0.2, flexGrow: 1}} className='subtitle'>
                         全能的班长工具箱
                     </Typography>
                     <IconButton
