@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
-import { trackPV } from '../utils/analyticsWrapper'
+import { trackPV } from '../utils/analyticsWrapper';
 
 import Mtoolkit from '../pages/Mtoolkit';
 import CheckList from '../pages/CheckList';
+import NotFound from '../pages/NotFound';
 
 export default function MToolkitRoutes() {
 
@@ -18,6 +19,7 @@ export default function MToolkitRoutes() {
         <Routes>
             <Route path="/" element={<Mtoolkit />}>
                 <Route path="check-list" element={<CheckList />} />
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     )
