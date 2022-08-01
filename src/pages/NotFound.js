@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Typography } from '@mui/material';
 
-import 'NotFound.css'
+import './NotFound.css'
 
 const ChromeDinoGame = lazy(() => import('react-chrome-dino'));
 
