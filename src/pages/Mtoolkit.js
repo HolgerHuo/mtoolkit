@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import { Outlet } from "react-router-dom";
-import { CssBaseline, useMediaQuery } from '@mui/material';
+import { Container, CssBaseline, useMediaQuery } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import NavFrame from '../layouts/Navbar'
-import ServiceWorkerNotification from '../components/ServiceWorkerNotification'
+import { lightTheme, darkTheme } from '../config/theme.js';
+
+import Navbar from '../layouts/Navbar';
+import ServiceWorkerNotification from '../components/ServiceWorkerNotification';
 
 import './Mtoolkit.css';
 
@@ -13,25 +15,21 @@ function Mtoolkit() {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
   const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-        },
-      }),
+    () => createTheme(prefersDarkMode ? darkTheme : lightTheme),
     [prefersDarkMode],
   );
 
   return (
-    <app className="Mtoolkit">
+    <Container className="Mtoolkit">
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <ServiceWorkerNotification />
-        <NavFrame>
+        <Navbar />
+        <Container className="app" maxWidth='sm'>
           <Outlet />
-        </NavFrame>
+        </Container>
       </ThemeProvider>
-    </app>
+    </Container>
   );
 }
 

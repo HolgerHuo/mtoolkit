@@ -1,0 +1,21 @@
+.subtitle {
+    visibility: hidden;
+    overflow-x: hidden;
+    word-break: keep-all;
+}
+
+@media (min-width: 450px) {
+    .subtitle {
+        visibility: visible;
+    }
+}
+
+#back-to-top-anchor {
+    height: 80px;
+}
+
+@media (min-width: 600px) {
+    #back-to-top-anchor {
+        height: 96px;
+    }
+}

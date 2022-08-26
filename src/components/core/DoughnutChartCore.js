@@ -4,7 +4,7 @@ import palette from 'google-palette/palette.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function DoughnutChart(props) {
+export default function DoughnutChartCore(props) {
   
     let colorScheme = [];
     try {
