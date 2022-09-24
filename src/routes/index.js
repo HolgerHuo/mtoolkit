@@ -8,6 +8,7 @@ import Entry from '../pages/Entry';
 import About from '../pages/About';
 import CheckList from '../pages/CheckList';
 import NotFound from '../pages/NotFound';
+import StiUI from '../pages/StiUI';
 
 export default function MToolkitRoutes() {
 
@@ -23,6 +24,7 @@ export default function MToolkitRoutes() {
                 <Route index element={<Entry />} />
                 <Route path="about" element={<About />} />
                 <Route path="check-list" element={<CheckList />} />
+                <Route path="sti-ui" element={<StiUI />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
