@@ -141,7 +141,7 @@ export default function StiUI() {
                     苹果系(macOS, iOS)
                 </Typography>
                 <Typography>
-                    选择好班级后点击<a onClick={() => { trackEvent('sti', 'apple') }} target='_blank' href={`https://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}>此链接</a>并在打开的应用中完成订阅。
+                    复制上方链接，并参考以下资料添加订阅。
                 </Typography>
                 <Typography sx={{ marginBottom: 1, color: 'gray', fontSize: 'small' }}>
                     参考: <a onClick={() => { trackEvent('sti', 'macos') }} target='_blank' href='https://support.apple.com/guide/calendar/icl1022/mac'>macOS</a>/<a onClick={() => { trackEvent('sti', 'ios') }} target='_blank' href='https://support.apple.com/guide/iphone/iph3d1110d4/ios'>iOS</a>
@@ -162,7 +162,7 @@ export default function StiUI() {
                     ⑥输入获取到的订阅地址，点击“添加”即可
                 </Typography>
                 <Typography style={{ fontWeight: 700, marginTop: 3, fontSize: 'large' }}>
-                    其它安卓设备
+                    其它安卓设备(含华为设备)
                 </Typography>
                 <Typography>
                     复制上方链接，<a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5') }} target='_blank'>下载</a>并安装ICSx⁵，在ICSx⁵中选择新建订阅并粘贴入链接，记得修改一下日历名称噢！
