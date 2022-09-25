@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { FormControl, InputLabel, Select, MenuItem, Grid, Snackbar, Alert, Chip, Typography, Stack, Divider, Link } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Grid, Chip, Typography, Stack, Divider, Link } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import { getLS } from '../utils/localStorageWrapper';
@@ -67,12 +67,6 @@ export default function StiUI() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [notification, setNotification] = useState(0);
-
-    const handleClose = () => {
-        setNotification(false);
-    };
-
     const isAllSub = c => {
         if (localStorage.STI_c && (localStorage.STI_c === '2' || localStorage.STI_c === '5')) {
             return true;
@@ -83,18 +77,6 @@ export default function StiUI() {
 
     return (
         <Grid item xs={12}>
-
-            <Snackbar
-                open={notification === 1}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                autoHideDuration={3000}
-                onClose={handleClose}
-                key='success'
-            >
-                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    已成功复制到剪贴板！(微信中无法复制且无法检测)
-                </Alert>
-            </Snackbar>
 
             <Stack direction="row" sx={{ marginRight: 1, marginBottom: 2, marginLeft: 0.5 }}>
                 <Selector value={c} variant='standard' sx={{ width: '65%' }} callback={setC} id='c' name='班级' data={classData}></Selector>
@@ -115,8 +97,9 @@ export default function StiUI() {
             </Grid>
 
             <Grid sx={{ margin: 2, lineHeight: 2 }}>
-                <FormControl fullWidth sx={{ paddingRight: 1 }} variant="standard">
-                    <Link className='result' href={`webcal://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`} target="_blank" rel="noopener" color="inherit">{`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}</Link>
+                <FormControl fullWidth sx={{ paddingRight: 0.7 }}>
+                <Typography>订阅链接</Typography>
+                    <Link className='result' sx={{mt: -3.5}} href={`webcal://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`} target="_blank" rel="noopener" color="inherit">{`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}</Link>
                 </FormControl>
                 <Chip icon={<HelpOutlineIcon />} size="small" label="如何使用" variant="outlined" sx={{ marginBottom: 2, marginTop: 3 }} />
                 <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 4 }}>
