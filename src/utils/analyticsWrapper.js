@@ -11,14 +11,15 @@ if (process.env.NODE_ENV === 'production') {
 
 async function initialize(provider) {
     if (provider === 'umami') {
-        let UmamiClass = await import('react-umami');
+        let UmamiLib = await import('../lib/react-umami');
+        const UmamiClass = UmamiLib.default;
         try {
             // eslint-disable-next-line
             let regex = new RegExp('^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)', 'img');
             regex.lastIndex = 0;
             let hostname = regex.exec(process.env.PUBLIC_URL)[1];
             hostname = hostname || 'invalid.domain';
-            umami.tracker = new UmamiClass.react_umami(
+            umami.tracker = new UmamiClass(
                 process.env.REACT_APP_UMAMI_WEBSITE_ID,
                 hostname,
                 process.env.REACT_APP_UMAMI_SCRIPT_URL
@@ -51,25 +52,49 @@ async function trackWebVitals() {
         webVitals.getFCP(endpoint);
         webVitals.getTTFB(endpoint);
     }
-    if (ga.enabled === true) {
-        if (!ga.isInitialized) {
-            ga.isInitialized = await initialize('ga4');
-        }
-        if (ga.isInitialized) {
-            function sendToGoogleAnalytics({ name, delta, value, id }) {
-                ga.tracker.event(name, {
-                    value: delta,
-                    metric_id: id,
-                    metric_value: value,
-                    metric_delta: delta,
-                });
+    if (ga.enabled === true || umami.enabled === true) {
+        if (ga.enabled === true) {
+            if (!ga.isInitialized) {
+                ga.isInitialized = await initialize('ga4');
             }
-            try {
-                collectWebVitals(sendToGoogleAnalytics);
-            } catch(e) {
-                console.debug('ga4 failed sending web-vitals data: ', e);
-            } 
+            if (ga.isInitialized) {
+                function sendToGoogleAnalytics({ name, delta, value, id }) {
+                    ga.tracker.event(name, {
+                        value: delta,
+                        metric_id: id,
+                        metric_value: value,
+                        metric_delta: delta,
+                    });
+                }
+                try {
+                    collectWebVitals(sendToGoogleAnalytics);
+                } catch (e) {
+                    console.debug('ga4 failed sending web-vitals data: ', e);
+                }
+            }
         }
+
+        if (umami.enabled === true) {
+            if (!umami.isInitialized) {
+                umami.isInitialized = await initialize('umami');
+            }
+            if (umami.isInitialized) {
+                function sendToUmami({ name, delta, value, id }) {
+                    umami.tracker.trackEvent(name, {
+                        value: delta,
+                        metric_id: id,
+                        metric_value: value,
+                        metric_delta: delta,
+                    }, window.location.pathname);
+                }
+                try {
+                    collectWebVitals(sendToUmami);
+                } catch (e) {
+                    console.debug('umami failed sending web-vitals data: ', e);
+                }
+            }
+        }
+
     } else {
         collectWebVitals(console.debug);
     }
@@ -108,34 +133,39 @@ export function trackPV() {
     trackWebVitals();
 }
 
-async function umamiTrackEvent(value, type) {
+async function umamiTrackEvent(data, name) {
     if (!umami.isInitialized) {
         umami.isInitialized = await initialize('umami');
     }
     if (umami.isInitialized) {
-        umami.tracker.trackEvent(type, value, window.location.pathname);
+        umami.tracker.trackEvent(name, data, window.location.pathname);
     }
 }
 
-async function gaTrackEvent(value, type) {
+async function gaTrackEvent(data, name) {
     if (!ga.isInitialized) {
         ga.isInitialized = await initialize('ga4');
     }
     if (ga.isInitialized) {
-        ga.tracker.event({ category: type, action: value });
+        ga.tracker.event(name, data);
     }
 }
 
-export function trackEvent(value, type = 'custom') {
+export function trackEvent(event, name) {
+    let data = event;
+    if (typeof data === 'string') {
+        data = {value: event, type: name}
+    }
+
     if (umami.enabled === true) {
-        let event = umamiTrackEvent(value, type);
+        let event = umamiTrackEvent(data, name);
         event.catch(e => console.debug('umami failed sending event: ', e));
     }
     if (ga.enabled === true) {
-        let event = gaTrackEvent(value, type);
+        let event = gaTrackEvent(data, name);
         event.catch(e => console.debug('ga4 failed sending event: ', e));
     }
     if (umami.enabled !== true && ga.enabled !== true) {
-        console.log('Event ' + value + '(' + type + ') triggered.');
+        console.log('Event ' + name + ': ' + JSON.stringify(data) + ' triggered.');
     }
 }

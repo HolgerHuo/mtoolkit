@@ -1,0 +1,26 @@
+{
+  "name": "react-umami",
+  "version": "1.0.1",
+  "description": "A package wich allow react to esay use umami analytics.",
+  "main": "index.js",
+  "homepage": "https://github.com/LucasSovre/react_umami",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasSovre/react_umami.git"
+  },
+  "type": "module",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "umami",
+    "react",
+    "umami-react",
+    "react_umami",
+    "analytics"
+  ],
+  "author": "Lucas Sovre <lucas.sovre@yahoo.com>",
+  "license": "ISC"
+}

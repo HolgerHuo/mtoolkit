@@ -166,7 +166,7 @@ export default function StiUI() {
                     复制上方链接，<a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5') }} target='_blank'>下载</a>并安装ICSx⁵，在ICSx⁵中选择新建订阅并粘贴入链接，记得修改一下日历名称噢！
                 </Typography>
                 <Typography sx={{ marginTop: 0.3, marginBottom: 0.3 }}>
-                    (华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank'>关闭纯净模式</a>)
+                    (下载过慢请使用<a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dc') }} target='_blank'>镜像链接</a>/华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank'>关闭纯净模式</a>)
                 </Typography>
                 <Typography sx={{ color: 'gray', fontSize: 'small', paddingBottom: 2 }}>
                     ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'apple') }} target='_blank'>GitHub</a>
