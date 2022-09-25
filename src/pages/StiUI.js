@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { FormControl, InputLabel, Select, MenuItem, Grid, TextField, Snackbar, Alert, Chip, Typography, Stack, Divider } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Grid, Snackbar, Alert, Chip, Typography, Stack, Divider, Link } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import { getLS } from '../utils/localStorageWrapper';
@@ -74,24 +74,12 @@ export default function StiUI() {
     };
 
     const isAllSub = c => {
-        if (localStorage.STI_c && (localStorage.STI_c === '2' || localStorage.STI_c === '5')){
+        if (localStorage.STI_c && (localStorage.STI_c === '2' || localStorage.STI_c === '5')) {
             return true;
         }
 
         return [2, 5].includes(c);
     }
-
-    const copyFocus = (e) => {
-        try {
-            navigator.clipboard.writeText(e.target.value);
-            setNotification(1);
-        } catch (error) {
-            setNotification(0);
-            console.debug('error: ', error);
-        } finally {
-            e.target.select();
-        }
-    };
 
     return (
         <Grid item xs={12}>
@@ -128,52 +116,33 @@ export default function StiUI() {
 
             <Grid sx={{ margin: 2, lineHeight: 2 }}>
                 <FormControl fullWidth sx={{ paddingRight: 1 }} variant="standard">
-                    <TextField
-                        label='订阅链接(点击即可复制)'
-                        id="subscription"
-                        onFocus={copyFocus}
-                        value={`https://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}
-                        variant="standard"
-                        inputProps={{ readOnly: true }}
-                    />
+                    <Link className='result' href={`webcal://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`} target="_blank" rel="noopener" color="inherit">{`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}</Link>
                 </FormControl>
                 <Chip icon={<HelpOutlineIcon />} size="small" label="如何使用" variant="outlined" sx={{ marginBottom: 2, marginTop: 3 }} />
-                <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 1 }}>
-                    苹果系(macOS, iOS)
+                <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 4 }}>
+                    苹果系(macOS/iOS)、小米(MIUI)
                 </Typography>
                 <Typography>
-                    复制上方链接，并参考<a onClick={() => { trackEvent('sti', 'macos') }} target='_blank' rel="noreferrer"  href='https://support.apple.com/guide/calendar/icl1022/mac'>macOS</a>/<a onClick={() => { trackEvent('sti', 'ios') }} target='_blank' rel="noreferrer"  href='https://support.apple.com/guide/iphone/iph3d1110d4/ios'>iOS</a>资料添加订阅。
+                    点击上方链接并在弹出的应用中完成订阅。
                 </Typography>
-                <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 1 }}>
-                    MIUI(小米手机)
-                </Typography>
-                <Typography>
-                    ①在小米手机自带应用商店内升级“日历”APP至最新版本；<br />
-                    ②打开“日历”APP，点击右上角“更多”图标（三个点）；
-                    <br />
-                    ③点击“设置”；
-                    <br />
-                    ④点击“日程导入”；
-                    <br />
-                    ⑤点击“URL导入”；
-                    <br />
-                    ⑥输入获取到的订阅地址，点击“添加”即可
-                </Typography>
-                <Typography style={{ fontWeight: 700, marginTop: 5, fontSize: 'large' }}>
-                    其它安卓设备(含华为设备)
+                <Typography style={{ fontWeight: 700, marginTop: 7, marginBottom: 4, fontSize: 'large' }}>
+                    其他安卓手机(含鸿蒙)(或点击以上链接没有效果)
                 </Typography>
                 <Typography>
-                    复制上方链接，<a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5') }} target='_blank' rel="noreferrer" >下载</a>并安装ICSx⁵，在ICSx⁵中选择新建订阅并粘贴入链接，记得修改一下日历名称噢！
+                    <a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5-fdroid') }} target='_blank' rel="noreferrer" >下载</a>并安装ICSx⁵，随后重新点击上方链接。
                 </Typography>
-                <Typography sx={{ marginTop: 0.3, marginBottom: 0.3 }}>
-                    (下载过慢请使用<a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dc') }} target='_blank' rel="noreferrer" >镜像链接</a>/华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>)
+                <Typography sx={{ marginTop: 2, marginBottom: 1, color: 'gray' }}>
+                    下载如果过慢可以使用以下链接:<br /> <a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-bj') }} target='_blank' rel="noreferrer" >镜像1</a>(北京)/<a href='https://bj-cn-1-cdn.weblogcomm.ltd/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-cf') }} target='_blank' rel="noreferrer" >镜像2</a>(CloudFlare)
+                </Typography>
+                <Typography sx={{ marginTop: 1, marginBottom: 1, color: 'gray' }}>
+                    华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>
                 </Typography>
                 <Typography sx={{ color: 'gray', fontSize: 'small', paddingBottom: 2 }}>
-                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'apple') }} target='_blank' rel="noreferrer" >GitHub</a>
+                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'icsx5-src') }} target='_blank' rel="noreferrer" >GitHub</a>
                 </Typography>
                 <Divider />
                 <Typography sx={{ color: 'gray', paddingTop: 2 }} className='footer'>
-                    由<a href='https://github.com/HolgerHuo/schedule-to-ics' onClick={() => { trackEvent('sti-github', 'click') }} target='_blank' rel="noreferrer" >schedule-to-ics</a>强力驱动。
+                    由<a href='https://github.com/HolgerHuo/schedule-to-ics' onClick={() => { trackEvent('click', 'sti-src') }} target='_blank' rel="noreferrer" >schedule-to-ics</a>强力驱动。
                 </Typography>
             </Grid>
         </Grid>

@@ -5,3 +5,8 @@ a {
 .footer {
     text-align: center;
 }
+
+.result {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
