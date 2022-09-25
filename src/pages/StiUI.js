@@ -98,8 +98,8 @@ export default function StiUI() {
 
             <Grid sx={{ margin: 2, lineHeight: 2 }}>
                 <FormControl fullWidth sx={{ paddingRight: 0.7 }}>
-                <Typography>订阅链接</Typography>
-                    <Link className='result' sx={{mt: -3.5}} href={`webcal://sti.r669.live/tfls/g3/${c}/schedule.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`} target="_blank" rel="noopener" color="inherit">{`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}</Link>
+                    <Typography>订阅链接</Typography>
+                    <Link className='result' sx={{ mt: -3.5 }} href={`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`} target="_blank" rel="noopener" color="inherit">{`webcal://sti.r669.live/tfls/g3/${c}/G3.${c}.ics?opt1=${o1}&opt2=${o2}&opt3=${o3}&sub-class=${s}`}</Link>
                 </FormControl>
                 <Chip icon={<HelpOutlineIcon />} size="small" label="如何使用" variant="outlined" sx={{ marginBottom: 2, marginTop: 3 }} />
                 <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 4 }}>
@@ -109,19 +109,25 @@ export default function StiUI() {
                     点击上方链接并在弹出的应用中完成订阅。
                 </Typography>
                 <Typography style={{ fontWeight: 700, marginTop: 7, marginBottom: 4, fontSize: 'large' }}>
-                    其他安卓手机(含鸿蒙)(或点击以上链接没有效果)
+                    其他安卓手机(含鸿蒙)
                 </Typography>
                 <Typography>
                     <a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5-fdroid') }} target='_blank' rel="noreferrer" >下载</a>并安装ICSx⁵，随后重新点击上方链接。
                 </Typography>
-                <Typography sx={{ marginTop: 2, marginBottom: 1, color: 'gray' }}>
+                <Typography sx={{ pt: 0.7,color: 'gray', fontSize: 'small' }}>
+                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'icsx5-src') }} target='_blank' rel="noreferrer" >GitHub</a>
+                </Typography>
+                <Typography sx={{ marginTop: 1, marginBottom: 1, fontSize: 'small' }}>
                     下载如果过慢可以使用以下链接:<br /> <a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-bj') }} target='_blank' rel="noreferrer" >镜像1</a>(北京)/<a href='https://bj-cn-1-cdn.weblogcomm.ltd/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-cf') }} target='_blank' rel="noreferrer" >镜像2</a>(CloudFlare)
                 </Typography>
-                <Typography sx={{ marginTop: 1, marginBottom: 1, color: 'gray' }}>
-                    华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>
+                <Typography sx={{ marginTop: 1, marginBottom: 1, color: 'gray', fontSize: 'small' }}>
+                    (华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>)
                 </Typography>
-                <Typography sx={{ color: 'gray', fontSize: 'small', paddingBottom: 2 }}>
-                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'icsx5-src') }} target='_blank' rel="noreferrer" >GitHub</a>
+                <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 4 }}>
+                    其他设备
+                </Typography>
+                <Typography sx={{ paddingBottom: 2 }}>
+                    请自行搜索<a href='https://www.baidu.com/s?wd=如何订阅iCal日历' onClick={() => { trackEvent('sti', 'baidu') }} target='_blank' rel="noreferrer" >如何订阅iCal日历</a>。
                 </Typography>
                 <Divider />
                 <Typography sx={{ color: 'gray', paddingTop: 2 }} className='footer'>
