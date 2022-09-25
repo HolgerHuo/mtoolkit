@@ -9,7 +9,8 @@ import './Navbar.css';
 const drawerWidth = 240;
 
 const toolList = [
-    { itemName: '微信接龙考勤', itemTo: '/check-list' }
+    { itemName: '微信接龙考勤', itemTo: '/check-list' },
+    { itemName: '订阅TFLS课表', itemTo: '/sti-ui' }
 ];
 
 function ScrollTop(props) {
