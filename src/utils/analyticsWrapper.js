@@ -59,7 +59,8 @@ async function trackWebVitals() {
             }
             if (ga.isInitialized) {
                 function sendToGoogleAnalytics({ name, delta, value, id }) {
-                    ga.tracker.event(name, {
+                    ga.tracker.event('web-vitals', {
+                        type: name,
                         value: delta,
                         metric_id: id,
                         metric_value: value,
@@ -80,7 +81,8 @@ async function trackWebVitals() {
             }
             if (umami.isInitialized) {
                 function sendToUmami({ name, delta, value, id }) {
-                    umami.tracker.trackEvent(name, {
+                    umami.tracker.trackEvent('web-vitals', {
+                        type: name,
                         value: delta,
                         metric_id: id,
                         metric_value: value,

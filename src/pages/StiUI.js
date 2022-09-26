@@ -112,26 +112,26 @@ export default function StiUI() {
                     其他安卓手机(含鸿蒙)
                 </Typography>
                 <Typography>
-                    <a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent('sti', 'icsx5-fdroid') }} target='_blank' rel="noreferrer" >下载</a>并安装ICSx⁵，随后重新点击上方链接。
+                    <a href='https://f-droid.org/repo/at.bitfire.icsdroid_62.apk' onClick={() => { trackEvent({ action: 'click', target: 'icsx5-fdroid', page: 'sti' }, 'icsx5- fdroid') }} target='_blank' rel="noreferrer" >下载</a>并安装ICSx⁵，随后重新点击上方链接。
                 </Typography>
-                <Typography sx={{ pt: 0.7,color: 'gray', fontSize: 'small' }}>
-                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent('sti', 'icsx5-src') }} target='_blank' rel="noreferrer" >GitHub</a>
+                <Typography sx={{ pt: 0.7, color: 'gray', fontSize: 'small' }}>
+                    ICSx⁵是开源软件(GPL-3.0)，其源代码位于<a href='https://github.com/bitfireAT/icsx5' onClick={() => { trackEvent({ action: 'click', target: 'icsx5-src', page: 'sti' }, 'icsx5-src') }} target='_blank' rel="noreferrer" >GitHub</a>
                 </Typography>
                 <Typography sx={{ marginTop: 1, marginBottom: 1, fontSize: 'small' }}>
-                    下载如果过慢可以使用以下链接:<br /> <a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-bj') }} target='_blank' rel="noreferrer" >镜像1</a>(北京)/<a href='https://bj-cn-1-cdn.weblogcomm.ltd/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent('sti', 'icsx5-dccdn-cf') }} target='_blank' rel="noreferrer" >镜像2</a>(CloudFlare)
+                    下载如果过慢可以使用以下链接:<br /> <a href='https://cdn.dragoncloud.win/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent({ action: 'click', target: 'icsx5-dccdn-bj', page: 'sti' }, 'icsx5-dccdn-bj') }} target='_blank' rel="noreferrer" >镜像1</a>(北京)/<a href='https://bj-cn-1-cdn.weblogcomm.ltd/static/apks/at.bitfire.icsdroid_62.apk.zip' onClick={() => { trackEvent({ action: 'click', target: 'icsx5-dccdn-cf', page: 'sti' }, 'icsx5-dccdn-cf') }} target='_blank' rel="noreferrer" >镜像2</a>(CloudFlare)
                 </Typography>
                 <Typography sx={{ marginTop: 1, marginBottom: 1, color: 'gray', fontSize: 'small' }}>
-                    (华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent('sti', 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>)
+                    (华为手机如无法安装ICSx⁵请<a href='https://developer.huawei.com/consumer/cn/forum/topic/0203581985638000413?fid=26' onClick={() => { trackEvent({ action: 'click', target: 'Harmony OS disable pure mode', page: 'sti' }, 'HOS') }} target='_blank' rel="noreferrer" >关闭纯净模式</a>)
                 </Typography>
                 <Typography style={{ fontWeight: 700, marginTop: 2, fontSize: 'large', marginBottom: 4 }}>
                     其他设备
                 </Typography>
                 <Typography sx={{ paddingBottom: 2 }}>
-                    请自行搜索<a href='https://www.baidu.com/s?wd=如何订阅iCal日历' onClick={() => { trackEvent('sti', 'baidu') }} target='_blank' rel="noreferrer" >如何订阅iCal日历</a>。
+                    请自行搜索<a href='https://www.baidu.com/s?wd=如何订阅iCal日历' onClick={() => { trackEvent({ action: 'click', target: 'baidu-search-how-to-use-ics', page: 'sti' }) }} target='_blank' rel="noreferrer" >如何订阅iCal日历</a>。
                 </Typography>
                 <Divider />
                 <Typography sx={{ color: 'gray', paddingTop: 2 }} className='footer'>
-                    由<a href='https://github.com/HolgerHuo/schedule-to-ics' onClick={() => { trackEvent('click', 'sti-src') }} target='_blank' rel="noreferrer" >schedule-to-ics</a>强力驱动。
+                    由<a href='https://github.com/HolgerHuo/schedule-to-ics' onClick={() => { trackEvent({ action: 'click', target: 'sti-src', page: 'sti' }, 'sti-src') }} target='_blank' rel="noreferrer" >schedule-to-ics</a>强力驱动。
                 </Typography>
             </Grid>
         </Grid>
