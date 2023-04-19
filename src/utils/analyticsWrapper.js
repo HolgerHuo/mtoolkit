@@ -1,4 +1,4 @@
-let umami = { enabled: false, isInitialized: false, tracker: undefined }, ga = { enabled: false, isInitialized: false, tracker: undefined };
+let umami = { enabled: false, isInitialized: false, tracker: undefined }, ga = { enabled: false, isInitialized: false, tracker: undefined }, plausible = { enabled: false, isInitialized: false, tracker: undefined };
 
 if (process.env.NODE_ENV === 'production') {
     if (process.env.REACT_APP_UMAMI_SCRIPT_URL !== undefined && process.env.REACT_APP_UMAMI_WEBSITE_ID !== undefined) {
@@ -6,6 +6,9 @@ if (process.env.NODE_ENV === 'production') {
     }
     if (process.env.REACT_APP_GA4_ID !== undefined) {
         ga.enabled = true;
+    }
+    if (process.env.REACT_APP_PLAUSIBLE_ID !== undefined) {
+        plausible.enabled = true;
     }
 }
 
@@ -38,6 +41,20 @@ async function initialize(provider) {
             return true;
         } catch (e) {
             console.error('ga4 initialization failed: ', e);
+            return false;
+        }
+    }
+    if (provider === 'plausible') {
+        let Plausible = await import("plausible-tracker");
+        try {
+            plausible.tracker = Plausible.default({
+                domain: process.env.REACT_APP_PLAUSIBLE_ID,
+                apiHost: process.env.REACT_APP_PLAUSIBLE_HOST || undefined
+            });
+            plausible.tracker.enableAutoOutboundTracking();
+            return true;
+        } catch (e) {
+            console.error('plausible initialization failed: ', e);
             return false;
         }
     }
@@ -97,6 +114,30 @@ async function trackWebVitals() {
             }
         }
 
+        if (plausible.enabled === true) {
+            if (!plausible.isInitialized) {
+                plausible.isInitialized = await initialize('plausible');
+            }
+            if (plausible.isInitialized) {
+                function sendToPlausible({ name, delta, value, id }) {
+                    plausible.tracker.trackEvent('web-vitals', {
+                        props: {
+                            type: name,
+                            value: delta,
+                            metric_id: id,
+                            metric_value: value,
+                            metric_delta: delta,
+                        }
+                    });
+                }
+                try {
+                    collectWebVitals(sendToPlausible);
+                } catch (e) {
+                    console.debug('plausible failed sending web-vitals data: ', e);
+                }
+            }
+        }
+
     } else {
         collectWebVitals(console.debug);
     }
@@ -120,6 +161,15 @@ async function gaTrackPV() {
     }
 }
 
+async function plausibleTrackPV() {
+    if (!plausible.isInitialized) {
+        plausible.isInitialized = await initialize('plausible');
+    }
+    if (plausible.isInitialized) {
+        plausible.tracker.trackPageview({})
+    }
+}
+
 export function trackPV() {
     if (umami.enabled === true) {
         let pv = umamiTrackPV();
@@ -129,7 +179,11 @@ export function trackPV() {
         let pv = gaTrackPV();
         pv.catch(e => console.debug('ga4 failed sending pv: ', e));
     }
-    if (umami.enabled !== true && ga.enabled !== true) {
+    if (plausible.enabled === true) {
+        let pv = plausibleTrackPV();
+        pv.catch(e => console.debug('plausible failed sending pv: ', e));
+    }
+    if (umami.enabled !== true && ga.enabled !== true && plausible.enabled !== true) {
         console.log('Navigated to ' + window.location.pathname);
     }
     trackWebVitals();
@@ -153,6 +207,15 @@ async function gaTrackEvent(data, name) {
     }
 }
 
+async function plausibleTrackEvent(data, name) {
+    if (!plausible.isInitialized) {
+        plausible.isInitialized = await initialize('plausible');
+    }
+    if (plausible.isInitialized) {
+        plausible.tracker.trackEvent(name, { props: data });
+    }
+}
+
 export function trackEvent(event, name) {
     let data = event;
     if (typeof data === 'string') {
@@ -167,7 +230,12 @@ export function trackEvent(event, name) {
         let event = gaTrackEvent(data, name);
         event.catch(e => console.debug('ga4 failed sending event: ', e));
     }
-    if (umami.enabled !== true && ga.enabled !== true) {
+    if (plausible.enabled === true) {
+        let event = plausibleTrackEvent(data, name);
+        event.catch(e => console.debug('plausible failed sending event: ', e));
+    }
+
+    if (umami.enabled !== true && ga.enabled !== true && plausible.enabled !== true) {
         console.log('Event ' + name + ': ' + JSON.stringify(data) + ' triggered.');
     }
 }

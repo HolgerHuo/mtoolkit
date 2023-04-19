@@ -31,6 +31,7 @@
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^3.8.2",
     "google-palette": "^1.1.0",
+    "plausible-tracker": "^0.3.8",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-chrome-dino": "^0.1.3",
