@@ -8,8 +8,9 @@ import { trackEvent } from '../utils/analyticsWrapper';
 import './Entry.css';
 import shiwu from '../static/images/shiwu-2nd-edition.png';
 import checkListBackground from '../static/images/check-list.png';
+import tflsSub from '../static/images/tfls-sub.png';
 
-const tools = [{ name: '微信接龙考勤', path: '/check-list', descriptionText: '一个可以帮你找出谁没有接龙、自动识别出接龙中的选项的小工具', backgroundImg: checkListBackground, imgAlt: 'wechat check-in helper screenshot' }, { name: '订阅TFLS课表', path: '/sti-ui', descriptionText: '快速订阅课表，并为你提供腾讯会议、地点等信息', backgroundImg: checkListBackground, imgAlt: 'schedule' }];
+const tools = [{ name: '微信接龙考勤', path: '/check-list', descriptionText: '一个可以帮你找出谁没有接龙、自动识别出接龙中的选项的小工具', backgroundImg: checkListBackground, imgAlt: 'wechat check-in helper screenshot' }, { name: '订阅TFLS课表', path: '/sti-ui', descriptionText: '快速订阅课表，并为你提供腾讯会议、地点等信息', backgroundImg: tflsSub, imgAlt: 'schedule' }];
 
 function ToolCard() {
     return (

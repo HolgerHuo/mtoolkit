@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { FormControl, InputLabel, Select, MenuItem, Grid, Chip, Typography, Stack, Divider, Link, Alert, Snackbar } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Grid, Chip, Typography, Stack, Divider, Link, Alert, Snackbar, Backdrop } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import { getLS } from '../utils/localStorageWrapper';
@@ -45,6 +45,10 @@ const Selector = (props) => {
 
 // main ui component
 export default function StiUI() {
+    const [open, setOpen] = useState(true);
+    const handleCloseB = () => {
+        setOpen(false);
+    };
 
     const [c, setC] = useState(1);
     const [s, setS] = useState(1);
@@ -91,6 +95,13 @@ export default function StiUI() {
 
     return (
         <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: 222 }}
+                open={open}
+                onClick={handleCloseB}
+            >
+                <Typography>此项目已终止运营，感谢陪伴！</Typography>
+            </Backdrop>
             <Snackbar
                 open={notification}
                 anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
